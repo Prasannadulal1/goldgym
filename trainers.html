@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certified Trainers & Coaches | Gold Gym Hetauda</title>
+<meta name="description" content="Meet our certified personal trainers, strength coaches and nutrition specialists at Gold Gym Hetauda.">
+<link rel="icon" href="assets/logo-original.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .trainers-grid-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+  }
+  .skeleton-card {
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    height: 480px;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes skeleton-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar scrolled">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-original.jpg" alt="Gold Gym logo">
+      <span>Gold Gym Hetauda</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="trainers.html" class="active">Trainers</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="membership.html">Membership</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="socialmedia.html">Social Media</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html#join" class="btn btn-primary" style="padding:8px 20px;">Join Now</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- Page Header Hero -->
+<section class="subpage-hero">
+  <div class="container">
+    <a href="index.html" class="back-btn">← Back to Home</a>
+    <p class="kicker">MEET THE COACHES</p>
+    <h1>Expert Personal Trainers</h1>
+    <p>Dedicated fitness professionals committed to pushing your limits, correcting your form, and guiding your transformation.</p>
+  </div>
+</section>
+
+<!-- Trainers Content -->
+<section class="section">
+  <div class="container">
+    <div class="trainers-grid-page" id="trainers-grid">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:50px;">
+      <a href="index.html" class="back-btn" style="font-size:14px; padding:10px 24px;">← Back to Home</a>
+      <a href="contact.html#join" class="btn btn-primary" style="margin-left:14px;">Book a Personal Trainer</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="assets/logo-original.jpg" alt="Gold Gym logo" style="height:52px;width:52px;border-radius:50%;margin-bottom:14px;border:2px solid var(--gold);">
+        <p>A professional fitness center in Hetauda-4, Makwanpur, building strength since 2017.</p>
+        <div class="social-icons" id="footer-social"></div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="trainers.html">Trainers</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="socialmedia.html">Social Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Programs</h4>
+        <ul>
+          <li>Strength Training</li>
+          <li>Hypertrophy & Bodybuilding</li>
+          <li>Fat Loss & Conditioning</li>
+          <li>Personal Coaching</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <ul>
+          <li>Hetauda-4, Makwanpur, Nepal</li>
+          <li><a href="tel:9845296796">+977 9845296796</a></li>
+          <li style="margin-top:10px;"><a href="contact.html#join" style="color:var(--gold);font-weight:700;">📩 Inquire Online</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span id="yr"></span> Gold Gym Hetauda. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Mobile toggle
+document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+  document.querySelector('.nav-links')?.classList.toggle('open');
+});
+
+async function loadTrainers() {
+  const grid = document.getElementById('trainers-grid');
+  try {
+    const data = await apiGet(`${API_PUBLIC}/home.php`);
+    const trainers = data.trainers || [];
+
+    if (!trainers.length) {
+      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;padding:40px;">No trainers listed at the moment.</p>';
+      return;
+    }
+
+    grid.innerHTML = trainers.map(t => {
+      const visual = t.photo_path
+        ? `<img src="${resolveAsset(t.photo_path)}" alt="${escapeHtml(t.name)}" loading="lazy">`
+        : `<div class="trainer-avatar-banner" style="height:260px;">🏋️‍♂️</div>`;
+      const spec = t.specialization ? `<span class="trainer-badge">${escapeHtml(t.specialization)}</span>` : '';
+      const exp = t.experience ? `<div class="trainer-exp">⏱ ${escapeHtml(t.experience)} Experience</div>` : '';
+      const bio = t.bio ? `<div class="trainer-bio">${escapeHtml(t.bio)}</div>` : '';
+      const phone = t.phone ? `<a href="tel:${escapeHtml(t.phone)}" class="btn btn-outline" style="padding:6px 14px;font-size:12px;">📞 Call</a>` : '';
+      const fb = t.facebook_url ? `<a href="${escapeHtml(t.facebook_url)}" target="_blank" rel="noopener" class="btn btn-outline" style="padding:6px 14px;font-size:12px;color:#1877f2;border-color:#1877f2;">Facebook</a>` : '';
+      const ig = t.instagram_url ? `<a href="${escapeHtml(t.instagram_url)}" target="_blank" rel="noopener" class="btn btn-outline" style="padding:6px 14px;font-size:12px;color:#e1306c;border-color:#e1306c;">Instagram</a>` : '';
+
+      return `
+      <div class="card trainer-card">
+        ${visual}
+        ${spec}
+        <h3 style="margin:4px 0 6px;">${escapeHtml(t.name)}</h3>
+        <p style="color:var(--gold);font-weight:600;margin:0 0 8px;font-size:14px;">${escapeHtml(t.position || 'Fitness Coach')}</p>
+        ${exp}
+        ${bio}
+        <div class="trainer-actions">
+          ${phone}
+          ${fb}
+          ${ig}
+          <a href="contact.html#join" class="btn btn-primary" style="padding:6px 16px;font-size:12px;margin-left:auto;">Book Coach</a>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Render footer social
+    if (data.social && data.social.length) {
+      document.getElementById('footer-social').innerHTML = data.social.map(s => `
+        <a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-icon-link" aria-label="${s.platform}">
+          ${s.platform.charAt(0).toUpperCase()}
+        </a>`).join('');
+    }
+  } catch (err) {
+    grid.innerHTML = `<p style="grid-column:1/-1;color:#ff6b6b;text-align:center;">Failed to load trainers: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+loadTrainers();
+</script>
+</body>
+</html>

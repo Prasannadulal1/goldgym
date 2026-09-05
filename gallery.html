@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Gallery | Gold Gym Hetauda</title>
+<meta name="description" content="Explore inside Gold Gym Hetauda - training facilities, workout equipment, member transformations, and celebrations.">
+<link rel="icon" href="assets/logo-original.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar scrolled">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-original.jpg" alt="Gold Gym logo">
+      <span>Gold Gym Hetauda</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="trainers.html">Trainers</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="membership.html">Membership</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="socialmedia.html">Social Media</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html#join" class="btn btn-primary" style="padding:8px 20px;">Join Now</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="subpage-hero">
+  <div class="container">
+    <a href="index.html" class="back-btn">← Back to Home</a>
+    <p class="kicker">INSIDE OUR GYM</p>
+    <h1>Photo Gallery</h1>
+    <p>A glimpse into daily training, professional equipment, member achievements, and events at Gold Gym Hetauda.</p>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="section">
+  <div class="container">
+    <div class="gallery-filters" id="gallery-filters">
+      <button class="active" data-category="all">All Photos</button>
+      <button data-category="gym">Gym & Equipment</button>
+      <button data-category="training">Training</button>
+      <button data-category="events">Events</button>
+      <button data-category="programs">Programs</button>
+      <button data-category="members">Members</button>
+      <button data-category="celebrations">Celebrations</button>
+    </div>
+
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Injected by JS -->
+    </div>
+
+    <div style="text-align:center; margin-top:50px;">
+      <a href="index.html" class="back-btn" style="font-size:14px; padding:10px 24px;">← Back to Home</a>
+      <a href="contact.html#join" class="btn btn-primary" style="margin-left:14px;">Visit Gold Gym Today</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="assets/logo-original.jpg" alt="Gold Gym logo" style="height:52px;width:52px;border-radius:50%;margin-bottom:14px;border:2px solid var(--gold);">
+        <p>A professional fitness center in Hetauda-4, Makwanpur, building strength since 2017.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="trainers.html">Trainers</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="socialmedia.html">Social Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Hetauda-4, Makwanpur, Nepal</li>
+          <li><a href="tel:9845296796">+977 9845296796</a></li>
+          <li style="margin-top:10px;"><a href="contact.html#join" style="color:var(--gold);font-weight:700;">📩 Inquire Online</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Opening Hours</h4>
+        <p style="font-size:14px;color:#aaa;">Sunday – Saturday<br>5:00 AM – 9:30 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; <span id="yr"></span> Gold Gym Hetauda. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Mobile toggle
+document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+  document.querySelector('.nav-links')?.classList.toggle('open');
+});
+
+let allImages = [];
+
+async function loadGallery() {
+  const grid = document.getElementById('gallery-grid');
+  try {
+    const data = await apiGet(`${API_PUBLIC}/home.php`);
+    allImages = data.gallery || [];
+
+    if (!allImages.length) {
+      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;">No photos uploaded yet.</p>';
+      return;
+    }
+
+    renderGalleryImages('all');
+    initGalleryLightbox();
+  } catch (err) {
+    grid.innerHTML = `<p style="color:red;">Failed to load gallery: ${err.message}</p>`;
+  }
+}
+
+function renderGalleryImages(cat) {
+  const grid = document.getElementById('gallery-grid');
+  const filtered = cat === 'all' ? allImages : allImages.filter(g => g.category === cat);
+  if (!filtered.length) {
+    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;padding:40px;">No photos in this category.</p>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(g => `
+    <img src="${resolveAsset(g.image_path, 'assets/gallery-sample.png')}" alt="${escapeHtml(g.title || 'Gold Gym Hetauda')}" data-category="${escapeHtml(g.category)}" loading="lazy">
+  `).join('');
+}
+
+// Category filter
+document.getElementById('gallery-filters').addEventListener('click', (e) => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#gallery-filters button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderGalleryImages(e.target.dataset.category);
+});
+
+// Lightbox
+function initGalleryLightbox() {
+  document.getElementById('gallery-grid').addEventListener('click', (e) => {
+    if (e.target.tagName !== 'IMG') return;
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:200;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px;';
+    const full = document.createElement('img');
+    full.src = e.target.src;
+    full.style.cssText = 'max-width:92vw;max-height:92vh;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.8);';
+    overlay.appendChild(full);
+    overlay.addEventListener('click', () => overlay.remove());
+    document.body.appendChild(overlay);
+  });
+}
+
+loadGallery();
+</script>
+</body>
+</html>

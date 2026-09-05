@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Membership Plans & Pricing | Gold Gym Hetauda</title>
+<meta name="description" content="View gym membership rates, personal training plans, and flexible passes at Gold Gym Hetauda. No hidden fees.">
+<link rel="icon" href="assets/logo-original.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  /* ── Plan Grid ── */
+  .plans-page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  /* ── Plan Card ── */
+  .plan-page-card {
+    position: relative;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 40px 32px 36px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  .plan-page-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .plan-page-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold-dark);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,175,55,0.1);
+  }
+  .plan-page-card:hover::before { opacity: 1; }
+
+  /* ── Featured Plan ── */
+  .plan-page-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(160deg, rgba(212,175,55,0.12) 0%, rgba(22,25,34,0.95) 50%);
+    box-shadow: 0 10px 40px rgba(212,175,55,0.15), inset 0 1px 0 rgba(212,175,55,0.2);
+  }
+  .plan-page-card.featured::before { opacity: 1; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  /* ── Popular Badge ── */
+  .popular-badge {
+    position: absolute;
+    top: -1px;
+    right: 28px;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color: #0a0a0a;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    padding: 6px 14px;
+    border-radius: 0 0 10px 10px;
+    font-family: var(--font-display);
+  }
+
+  /* ── Plan Name ── */
+  .plan-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .plan-tagline {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  /* ── Price Block ── */
+  .plan-price-block {
+    margin-bottom: 28px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .plan-currency {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    vertical-align: top;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .plan-amount {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--gold-bright);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .plan-amount-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+  .plan-duration-label {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(212,175,55,0.1);
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Features List ── */
+  .plan-feat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px;
+    flex: 1;
+  }
+  .plan-feat-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .plan-feat-list li:last-child { border-bottom: none; }
+  .plan-feat-list li::before {
+    content: '✓';
+    color: var(--gold-bright);
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: rgba(212,175,55,0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+
+  /* ── CTA Button ── */
+  .plan-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    margin-top: auto;
+  }
+  .plan-cta-primary {
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color: #0a0a0a;
+  }
+  .plan-cta-primary:hover {
+    background: linear-gradient(135deg, #fff, var(--gold-bright));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.4);
+  }
+  .plan-cta-outline {
+    border-color: rgba(212,175,55,0.4);
+    color: var(--gold);
+    background: rgba(212,175,55,0.05);
+  }
+  .plan-cta-outline:hover {
+    background: var(--gold);
+    color: #0a0a0a;
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+  }
+
+  /* ── Perks strip ── */
+  .perks-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 60px;
+    padding: 40px 36px;
+    background: rgba(212,175,55,0.04);
+    border: 1px solid rgba(212,175,55,0.15);
+    border-radius: 14px;
+  }
+  .perk-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .perk-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .perk-text strong {
+    display: block;
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .perk-text span { font-size: 13px; color: var(--text-muted); }
+
+  /* ── Loading Skeleton ── */
+  .skeleton-plan {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    height: 500px;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes skeleton-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  @media (max-width: 768px) {
+    .plan-amount { font-size: 42px; }
+    .plan-page-card { padding: 32px 24px; }
+    .perks-strip { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar scrolled">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-original.jpg" alt="Gold Gym logo">
+      <span>Gold Gym Hetauda</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="trainers.html">Trainers</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="membership.html" class="active">Membership</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="socialmedia.html">Social Media</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html#join" class="btn btn-primary" style="padding:8px 20px;">Join Now</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="subpage-hero">
+  <div class="container">
+    <a href="index.html" class="back-btn">← Back to Home</a>
+    <p class="kicker">TRANSPARENT RATES</p>
+    <h1>Membership & Pricing</h1>
+    <p>Flexible membership options with full access to state-of-the-art strength machinery, cardio zones, and locker facilities. No hidden fees.</p>
+  </div>
+</section>
+
+<!-- Plans Section -->
+<section class="section">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:100%; margin-bottom:52px;">
+      <p class="kicker">SELECT A PLAN</p>
+      <h2>Choose Your Fitness Journey</h2>
+      <p style="margin:14px auto 0; max-width:520px;">Pick the membership that fits your goals. All plans come with full gym floor access and expert guidance.</p>
+    </div>
+
+    <div class="plans-page-grid" id="plans-grid">
+      <!-- Skeleton loading -->
+      <div class="skeleton-plan"></div>
+      <div class="skeleton-plan"></div>
+      <div class="skeleton-plan"></div>
+    </div>
+
+    <!-- Perks Strip -->
+    <div class="perks-strip" id="perks-strip" style="display:none;">
+      <div class="perk-item">
+        <div class="perk-icon">🔓</div>
+        <div class="perk-text">
+          <strong>Free Locker Room</strong>
+          <span>Secure lockers & changing facilities included</span>
+        </div>
+      </div>
+      <div class="perk-item">
+        <div class="perk-icon">🧭</div>
+        <div class="perk-text">
+          <strong>Orientation Session</strong>
+          <span>Machine guidance & safety walkthrough</span>
+        </div>
+      </div>
+      <div class="perk-item">
+        <div class="perk-icon">⏰</div>
+        <div class="perk-text">
+          <strong>All Opening Hours</strong>
+          <span id="perks-hours-text">Loading hours…</span>
+        </div>
+      </div>
+      <div class="perk-item">
+        <div class="perk-icon">🤝</div>
+        <div class="perk-text">
+          <strong>Community Support</strong>
+          <span>Friendly & motivating gym environment</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:52px;">
+      <a href="index.html" class="back-btn" style="font-size:14px; padding:10px 24px;">← Back to Home</a>
+      <a href="contact.html#join" class="btn btn-primary" style="margin-left:14px;">Inquire / Sign Up Online</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="assets/logo-original.jpg" alt="Gold Gym logo" style="height:52px;width:52px;border-radius:50%;margin-bottom:14px;border:2px solid var(--gold);">
+        <p>A professional fitness center in Hetauda-4, Makwanpur, building strength since 2017.</p>
+        <div class="social-icons" id="footer-social"></div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="trainers.html">Trainers</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="socialmedia.html">Social Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Hetauda-4, Makwanpur, Nepal</li>
+          <li><a href="tel:9845296796">+977 9845296796</a></li>
+          <li style="margin-top:10px;"><a href="contact.html#join" style="color:var(--gold);font-weight:700;">📩 Inquire Online</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Opening Hours</h4>
+        <p id="footer-hours" style="font-size:14px;color:#aaa;">Loading…</p>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; <span id="yr"></span> Gold Gym Hetauda. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Mobile toggle
+document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+  document.querySelector('.nav-links')?.classList.toggle('open');
+});
+
+// Parse price string → display as big number + label
+function parsePriceDisplay(priceStr) {
+  if (!priceStr) return { amount: '—', suffix: '' };
+  // e.g. "Rs. 2,000" or "Rs. 5,500" or "Custom"
+  const match = priceStr.match(/Rs\.?\s*([\d,]+)/i);
+  if (match) {
+    return { prefix: 'Rs.', amount: match[1] };
+  }
+  return { amount: priceStr, prefix: '' };
+}
+
+async function loadPlans() {
+  const grid = document.getElementById('plans-grid');
+  try {
+    const data = await apiGet(`${API_PUBLIC}/home.php`);
+    const plans = data.plans || [];
+
+    if (!plans.length) {
+      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;padding:40px;">No membership plans listed at the moment.</p>';
+      return;
+    }
+
+    grid.innerHTML = plans.map(p => {
+      const featList = (p.features || '')
+        .split('\n')
+        .map(f => f.trim())
+        .filter(Boolean)
+        .map(f => `<li>${escapeHtml(f)}</li>`)
+        .join('');
+
+      const { prefix, amount } = parsePriceDisplay(p.price);
+
+      const priceBlock = prefix
+        ? `<div class="plan-price-block">
+             <div>
+               <span class="plan-currency">${escapeHtml(prefix)}</span>
+               <span class="plan-amount">${escapeHtml(amount)}</span>
+             </div>
+             <div class="plan-amount-label">per ${escapeHtml(p.duration || 'visit')}</div>
+             ${p.duration ? `<div class="plan-duration-label">${escapeHtml(p.duration).toUpperCase()} PLAN</div>` : ''}
+           </div>`
+        : `<div class="plan-price-block">
+             <div class="plan-amount" style="font-size:32px;">${escapeHtml(amount)}</div>
+             ${p.duration ? `<div class="plan-amount-label">${escapeHtml(p.duration)}</div>` : ''}
+           </div>`;
+
+      const isFeatured = p.is_featured == 1;
+      return `
+      <div class="plan-page-card ${isFeatured ? 'featured' : ''}">
+        ${isFeatured ? '<div class="popular-badge">★ MOST POPULAR</div>' : ''}
+        <div class="plan-name">${escapeHtml(p.name)}</div>
+        ${p.description ? `<div class="plan-tagline">${escapeHtml(p.description)}</div>` : ''}
+        ${priceBlock}
+        <ul class="plan-feat-list">${featList}</ul>
+        <a href="contact.html#join" class="plan-cta ${isFeatured ? 'plan-cta-primary' : 'plan-cta-outline'}">
+          ${escapeHtml(p.button_text || 'Get Started')}
+        </a>
+      </div>`;
+    }).join('');
+
+    // Show perks strip
+    document.getElementById('perks-strip').style.display = '';
+
+    // ── Dynamic opening hours in perks strip & footer ──
+    renderHoursTexts(data.hours || [], data.is_open_now);
+
+    // Render footer social
+    const socialIcons = {
+      facebook: `<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+      instagram: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+      tiktok: `<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.02a8.27 8.27 0 0 0 4.84 1.54V7.12a4.85 4.85 0 0 1-1.07-.43z"/></svg>`,
+    };
+    const socialColors = { facebook:'#1877f2', instagram:'#e1306c', tiktok:'#010101' };
+    if (data.social && data.social.length) {
+      document.getElementById('footer-social').innerHTML = data.social.map(s => {
+        const icon = socialIcons[s.platform] || `<span style="font-size:12px;font-weight:700;">${s.platform.slice(0,2).toUpperCase()}</span>`;
+        const color = socialColors[s.platform] || '#D4AF37';
+        return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-icon-link" style="--social-color:${color};" title="${s.platform}">${icon}</a>`;
+      }).join('');
+    }
+  } catch (err) {
+    grid.innerHTML = `<p style="color:#f66;text-align:center;grid-column:1/-1;padding:40px;">Failed to load plans: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+/**
+ * Summarise opening hours for the perks strip and footer.
+ * Detects if every day has the same schedule and collapses to a single line,
+ * otherwise shows the weekday range.
+ */
+function renderHoursTexts(hours, isOpenNow) {
+  const fmt = (t) => {
+    if (!t) return '';
+    const [h, m] = t.split(':');
+    const d = new Date();
+    d.setHours(+h, +m, 0);
+    return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+  };
+
+  const activeDays = (hours || []).filter(h => !h.is_closed);
+
+  let perksText = 'Open daily';
+  let footerHtml = 'Daily';
+
+  if (activeDays.length > 0) {
+    // Check if all active days share the same open/close time
+    const firstOpen  = activeDays[0].open_time;
+    const firstClose = activeDays[0].close_time;
+    const allSame = activeDays.every(h => h.open_time === firstOpen && h.close_time === firstClose);
+
+    const openFmt  = fmt(firstOpen);
+    const closeFmt = fmt(firstClose);
+
+    if (allSame) {
+      // e.g. "Train any time — 6:00 AM to 9:00 PM daily"
+      perksText = `Train any time — ${openFmt} to ${closeFmt} daily`;
+      footerHtml = `Sunday – Saturday<br>${openFmt} – ${closeFmt}`;
+    } else {
+      // Different schedules — find most common range
+      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const lines = activeDays.map(h => `${dayNames[h.day_of_week]}: ${fmt(h.open_time)}–${fmt(h.close_time)}`);
+      perksText = lines.slice(0, 2).join(' · ') + (lines.length > 2 ? ' · …' : '');
+      footerHtml = activeDays.map(h =>
+        `${dayNames[h.day_of_week]}: ${fmt(h.open_time)}–${fmt(h.close_time)}`
+      ).join('<br>');
+    }
+  } else if (hours && hours.length === 0) {
+    perksText = 'Check contact for hours';
+    footerHtml = 'Contact us';
+  }
+
+  const perksEl = document.getElementById('perks-hours-text');
+  if (perksEl) perksEl.textContent = perksText;
+
+  const footerEl = document.getElementById('footer-hours');
+  if (footerEl) footerEl.innerHTML = footerHtml;
+}
+
+loadPlans();
+</script>
+</body>
+</html>

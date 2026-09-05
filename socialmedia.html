@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Follow Us | Gold Gym Hetauda</title>
+  <meta name="description" content="Follow Gold Gym Hetauda on social media – Instagram, Facebook, TikTok, YouTube and WhatsApp for daily workouts, transformations and gym updates.">
+  <link rel="icon" href="assets/logo-original.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .sm-hero {
+      min-height: 38vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 20px 50px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.18) 0%, transparent 70%),
+                  linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .sm-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(212,175,55,0.03) 0px, rgba(212,175,55,0.03) 1px, transparent 1px, transparent 28px);
+    }
+    .sm-hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 900;
+      margin: 0 0 14px;
+      background: linear-gradient(135deg, #fff 30%, var(--gold-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .sm-hero p {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    /* ── Platform Cards ── */
+    .platforms-section {
+      padding: 60px 0 100px;
+      background: #070709;
+    }
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .platform-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 38px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .platform-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--platform-color);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 0;
+    }
+    .platform-card:hover { transform: translateY(-8px); border-color: var(--platform-color); box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .platform-card:hover::before { opacity: 0.12; }
+    .platform-card > * { position: relative; z-index: 1; }
+    .platform-icon-wrap {
+      width: 68px; height: 68px;
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    .platform-card:hover .platform-icon-wrap {
+      background: var(--platform-color);
+      border-color: var(--platform-color);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .platform-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .platform-handle {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      word-break: break-all;
+    }
+    .platform-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .platform-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: all 0.25s ease;
+      margin-top: 4px;
+    }
+    .platform-card:hover .platform-btn {
+      background: var(--platform-color);
+      border-color: var(--platform-color);
+    }
+    .no-social {
+      text-align: center;
+      padding: 80px 20px;
+      color: rgba(255,255,255,0.3);
+      grid-column: 1 / -1;
+    }
+    /* ── Skeleton loaders ── */
+    .skeleton-card {
+      border-radius: 20px;
+      background: rgba(255,255,255,0.04);
+      height: 260px;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes skeleton-pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/logo-original.jpg" alt="Gold Gym" style="height:38px;width:38px;border-radius:50%;object-fit:cover;">
+      <span>Gold Gym Hetauda</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="trainers.html">Trainers</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="membership.html">Membership</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="socialmedia.html" class="active">Social Media</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html#join" class="btn btn-primary nav-cta">Join Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="sm-hero">
+  <div class="container" style="text-align:center;">
+    <a href="index.html" class="back-btn" style="margin-bottom:14px;">← Back to Home</a>
+    <p class="section-tag" style="margin-bottom:12px;">CONNECT WITH US</p>
+    <h1>Follow Gold Gym</h1>
+    <p>Stay motivated every day. Follow us for daily workout tips, body transformation stories, gym challenges and the latest news from Gold Gym Hetauda.</p>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section class="platforms-section">
+  <div class="container">
+    <div class="platforms-grid" id="platforms-grid">
+      <!-- Skeleton loaders -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="social-bar" style="display:none;" id="footer-social-bar">
+  <div class="container">
+    <div class="social-bar-inner">
+      <div class="social-bar-text">
+        <h3>Share With Friends</h3>
+        <p>Help others find Gold Gym — share our page!</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button onclick="shareGym('facebook')" class="btn btn-outline" style="color:#1877f2;border-color:#1877f2;">📣 Share on Facebook</button>
+        <button onclick="shareGym('whatsapp')" class="btn btn-outline" style="color:#25d366;border-color:#25d366;">💬 Share on WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div style="text-align:center;padding:30px 0;">
+      <a href="index.html" class="nav-brand" style="justify-content:center;display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <img src="assets/logo-original.jpg" alt="Gold Gym" style="height:40px;width:40px;border-radius:50%;">
+        <span style="font-family:'Montserrat',sans-serif;font-weight:800;color:var(--gold);font-size:18px;">Gold Gym Hetauda</span>
+      </a>
+      <p style="color:var(--text-muted);font-size:14px;">Hetauda-4, Makwanpur, Nepal</p>
+      <div class="footer-bottom">© <span id="yr"></span> Gold Gym Hetauda. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const PLATFORM_META = {
+  facebook:  { color: '#1877f2', desc: 'Like our page for daily gym updates, event announcements and community posts.', btn: 'Like on Facebook', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>` },
+  instagram: { color: '#e1306c', desc: 'Follow us for transformation photos, workout reels and behind-the-scenes gym content.', btn: 'Follow on Instagram', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>` },
+  tiktok:    { color: '#fe2c55', desc: 'Watch our short gym challenge videos, exercise tutorials and member transformation clips.', btn: 'Follow on TikTok', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.02a8.27 8.27 0 0 0 4.84 1.54V7.12a4.85 4.85 0 0 1-1.07-.43z"/></svg>` },
+  youtube:   { color: '#ff0000', desc: 'Subscribe for workout tutorials, nutrition tips, and full-length training sessions from our coaches.', btn: 'Subscribe on YouTube', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>` },
+  whatsapp:  { color: '#25d366', desc: 'Message us directly on WhatsApp for membership queries, schedules and personal training info.', btn: 'Chat on WhatsApp', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 2C6.473 2 2 6.474 2 12c0 1.776.464 3.441 1.275 4.882L2 22l5.255-1.246A9.956 9.956 0 0 0 11.99 22C17.516 22 22 17.526 22 12S17.516 2 11.99 2z"/></svg>` },
+  twitter:   { color: '#1da1f2', desc: 'Follow us on X for real-time gym notices, quick fitness motivation and community highlights.', btn: 'Follow on X', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` },
+  x:         { color: '#ffffff', desc: 'Follow us on X for real-time gym notices, quick fitness motivation and community highlights.', btn: 'Follow on X', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` },
+  threads:   { color: '#ffffff', desc: 'Join the conversation on Threads with our coaches, athletes and fitness community.', btn: 'Follow on Threads', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.89 12.18c-.37 1.83-1.89 2.76-3.82 2.76-2.58 0-4.22-1.78-4.22-4.59 0-3.08 1.94-4.83 4.49-4.83 2.37 0 3.86 1.48 3.86 3.75 0 2.25-1.42 3.39-2.73 3.39-.7 0-1.22-.39-1.22-1.04 0-.1.02-.2.05-.31l.48-1.86c.14-.54.21-.92.21-1.24 0-.64-.4-1.06-1.08-1.06-.92 0-1.63.78-1.63 1.97 0 1.63.95 2.72 2.45 2.72.63 0 1.13-.19 1.48-.48.25.96.95 1.54 2.07 1.54 1.52 0 2.85-.92 3.34-2.58.11-.37.38-1.57.38-1.57s.76.32 1.34.6c.12.06.2.19.2.33 0 .19-.1.37-.27.46-.77.42-1.47.78-2.17 1.18z"/></svg>` },
+  linkedin:  { color: '#0077b5', desc: 'Connect professionally with Gold Gym Hetauda leadership and sports conditioning specialists.', btn: 'Connect on LinkedIn', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>` },
+  telegram:  { color: '#24a1de', desc: 'Join our Telegram channel for direct schedule updates, workout announcements and gym alerts.', btn: 'Join Telegram Channel', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z"/></svg>` },
+  pinterest: { color: '#e60023', desc: 'Discover workout routines, healthy meal ideas and gym inspiration on our Pinterest boards.', btn: 'Follow on Pinterest', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2a10 10 0 0 0-3.66 19.31c-.04-.84-.08-2.14.02-3.07.09-.85.57-4.8.57-4.8s-.15-.3-.15-.74c0-.7.4-1.22.91-1.22.43 0 .64.32.64.71 0 .43-.28 1.08-.42 1.68-.12.5.25.92.74.92.89 0 1.58-.94 1.58-2.3 0-1.2-.86-2.04-2.09-2.04-1.43 0-2.26 1.07-2.26 2.18 0 .43.17.9.37 1.15.04.05.05.1.03.17-.04.16-.13.52-.15.6-.02.1-.08.12-.19.07-.72-.34-1.18-1.39-1.18-2.24 0-1.82 1.33-3.5 3.82-3.5 2.01 0 3.57 1.43 3.57 3.34 0 1.99-1.26 3.6-3 3.6-.59 0-1.14-.31-1.33-.67l-.36 1.38c-.13.5-.49 1.13-.73 1.52A10 10 0 1 0 12 2z"/></svg>` },
+  spotify:   { color: '#1db954', desc: 'Listen to Gold Gym workout playlists designed to keep your energy and adrenaline pumping.', btn: 'Listen on Spotify', icon: `<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.75.75 0 0 1-1.03.248c-2.82-1.723-6.37-2.113-10.55-1.159a.75.75 0 0 1-.334-1.462c4.575-1.043 8.492-.596 11.666 1.344a.75.75 0 0 1 .248 1.029zm1.225-2.723a.938.938 0 0 1-1.288.309c-3.227-1.984-8.146-2.557-11.963-1.399a.938.938 0 1 1-.548-1.794c4.364-1.325 9.782-.686 13.49 1.596a.938.938 0 0 1 .309 1.288zm.105-2.835C14.053 8.78 7.747 8.572 4.113 9.676a1.125 1.125 0 1 1-.652-2.154c4.183-1.27 11.162-1.03 15.633 1.625a1.125 1.125 0 0 1-1.18 1.92z"/></svg>` },
+};
+
+function getHandle(url) {
+  try {
+    const u = new URL(url);
+    const parts = u.pathname.replace(/^\/+|\/+$/g,'').split('/');
+    const last = parts[parts.length - 1];
+    return last ? (last.startsWith('@') ? last : '@' + last) : u.hostname;
+  } catch { return url.slice(0,40); }
+}
+
+async function loadPlatforms() {
+  try {
+    const social = await apiGet(`${API_PUBLIC}/home.php`).then(d => d.social).catch(() => null)
+      || await apiGet(`${API_PUBLIC}/home.php`);
+
+    let links = [];
+    if (Array.isArray(social)) {
+      links = social;
+    } else if (social && social.social) {
+      links = social.social;
+    }
+
+    renderPlatforms(links);
+  } catch (err) {
+    // Fallback demo data
+    renderPlatforms([
+      { platform: 'facebook',  url: 'https://www.facebook.com/GoldGymhtd/' },
+      { platform: 'instagram', url: 'https://www.instagram.com/goldgym_official_htd/' },
+      { platform: 'tiktok',    url: 'https://www.tiktok.com/@goldgym_htd/' },
+    ]);
+  }
+}
+
+function renderPlatforms(links) {
+  const grid = document.getElementById('platforms-grid');
+  if (!links || !links.length) {
+    grid.innerHTML = `<div class="no-social"><p style="font-size:40px;">📵</p><p>No social media links added yet.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = links.map(lk => {
+    const meta = PLATFORM_META[lk.platform] || {
+      color: '#D4AF37',
+      desc: `Follow Gold Gym on ${lk.platform}.`,
+      btn: `Visit on ${lk.platform}`,
+      icon: `<span style="font-size:32px;font-weight:900;">${lk.platform.slice(0,2).toUpperCase()}</span>`
+    };
+    const name = lk.platform.charAt(0).toUpperCase() + lk.platform.slice(1);
+    const handle = getHandle(lk.url);
+    return `
+    <a href="${lk.url}" target="_blank" rel="noopener" class="platform-card" style="--platform-color:${meta.color};">
+      <div class="platform-icon-wrap">${meta.icon}</div>
+      <div>
+        <div class="platform-name">${name}</div>
+        <div class="platform-handle">${handle}</div>
+      </div>
+      <p class="platform-desc">${meta.desc}</p>
+      <div class="platform-btn">
+        ${meta.icon.replace('width="32" height="32"','width="16" height="16"')}
+        ${meta.btn} ↗
+      </div>
+    </a>`;
+  }).join('');
+
+  document.getElementById('footer-social-bar').style.display = '';
+}
+
+function shareGym(platform) {
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent('Follow Gold Gym Hetauda on social media!');
+  const links = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+    whatsapp: `https://wa.me/?text=${text}%20${url}`
+  };
+  window.open(links[platform], '_blank', 'noopener');
+}
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+loadPlatforms();
+</script>
+</body>
+</html>

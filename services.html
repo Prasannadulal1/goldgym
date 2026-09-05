@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services & Training Programs | Gold Gym Hetauda</title>
+<meta name="description" content="Discover professional fitness services, strength equipment, personal training, and cardio programs at Gold Gym Hetauda.">
+<link rel="icon" href="assets/logo-original.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .services-grid-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 30px;
+  }
+  .service-card-img {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 18px;
+  }
+  .service-price-tag {
+    display: inline-block;
+    background: rgba(212,175,55,0.15);
+    border: 1px solid rgba(212,175,55,0.3);
+    color: var(--gold-bright);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar scrolled">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-original.jpg" alt="Gold Gym logo">
+      <span>Gold Gym Hetauda</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="trainers.html">Trainers</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="membership.html">Membership</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="socialmedia.html">Social Media</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html#join" class="btn btn-primary" style="padding:8px 20px;">Join Now</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- Subpage Hero -->
+<section class="subpage-hero">
+  <div class="container">
+    <a href="index.html" class="back-btn">← Back to Home</a>
+    <p class="kicker">WHAT WE OFFER</p>
+    <h1>Gym Services & Facilities</h1>
+    <p>Complete strength, endurance, and conditioning facilities designed to help athletes and beginners achieve real physical results.</p>
+  </div>
+</section>
+
+<!-- Services Grid Section -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">CORE OFFERINGS</p>
+      <h2>Fitness Services</h2>
+    </div>
+    <div class="services-grid-page" id="services-grid">
+      <div class="card" style="height:360px;"></div>
+      <div class="card" style="height:360px;"></div>
+      <div class="card" style="height:360px;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Training Programs Section -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">STRUCTURED WORKOUTS</p>
+      <h2>Training Programs</h2>
+    </div>
+    <div class="card-grid" id="programs-grid"></div>
+
+    <div style="text-align:center; margin-top:50px;">
+      <a href="index.html" class="back-btn" style="font-size:14px; padding:10px 24px;">← Back to Home</a>
+      <a href="membership.html" class="btn btn-primary" style="margin-left:14px;">View Membership Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="assets/logo-original.jpg" alt="Gold Gym logo" style="height:52px;width:52px;border-radius:50%;margin-bottom:14px;border:2px solid var(--gold);">
+        <p>A professional fitness center in Hetauda-4, Makwanpur, building strength since 2017.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="trainers.html">Trainers</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="socialmedia.html">Social Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul id="footer-services"></ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Hetauda-4, Makwanpur, Nepal</li>
+          <li><a href="tel:9845296796">+977 9845296796</a></li>
+          <li style="margin-top:10px;"><a href="contact.html#join" style="color:var(--gold);font-weight:700;">📩 Inquire Online</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; <span id="yr"></span> Gold Gym Hetauda. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Mobile toggle
+document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+  document.querySelector('.nav-links')?.classList.toggle('open');
+});
+
+function getServiceIcon(title) {
+  const t = (title || '').toLowerCase();
+  if (t.includes('weight') || t.includes('bodybuild') || t.includes('strength')) return '🏋️';
+  if (t.includes('personal') || t.includes('coach') || t.includes('diet')) return '🏆';
+  if (t.includes('cardio') || t.includes('hiit') || t.includes('endurance')) return '🏃';
+  return '💪';
+}
+
+async function loadServices() {
+  try {
+    const data = await apiGet(`${API_PUBLIC}/home.php`);
+    const services = data.services || [];
+    const programs = data.programs || [];
+
+    const sGrid = document.getElementById('services-grid');
+    if (!services.length) {
+      sGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;">No services listed yet.</p>';
+    } else {
+      sGrid.innerHTML = services.map(s => {
+        const visual = s.image_path
+          ? `<img src="${resolveAsset(s.image_path)}" alt="${escapeHtml(s.title)}" class="service-card-img" loading="lazy">`
+          : `<div class="service-icon-banner">${getServiceIcon(s.title)}</div>`;
+        const price = s.price ? `<span class="service-price-tag">${escapeHtml(s.price)}</span>` : '';
+        return `
+        <div class="card" style="display:flex;flex-direction:column;">
+          ${visual}
+          ${price}
+          <h3 style="margin-top:0;">${escapeHtml(s.title)}</h3>
+          <p style="flex:1;">${escapeHtml(s.description || '')}</p>
+          <div style="margin-top:16px;">
+            <a href="contact.html#join" class="btn btn-outline" style="width:100%;text-align:center;">Join This Service →</a>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    const pGrid = document.getElementById('programs-grid');
+    if (!programs.length) {
+      pGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#888;">No training programs listed yet.</p>';
+    } else {
+      pGrid.innerHTML = programs.map(p => {
+        const visual = p.image_path
+          ? `<img src="${resolveAsset(p.image_path)}" alt="${escapeHtml(p.title)}" style="height:180px;object-fit:cover;margin-bottom:16px;" loading="lazy">`
+          : `<div class="service-icon-banner">⚡</div>`;
+        return `
+        <div class="card" style="display:flex;flex-direction:column;">
+          ${visual}
+          <h3 style="margin-top:0;">${escapeHtml(p.title)}</h3>
+          ${p.duration ? `<p style="color:var(--gold);font-weight:600;font-size:13px;margin:0 0 8px;">⏱ ${escapeHtml(p.duration)}</p>` : ''}
+          <p style="flex:1;">${escapeHtml(p.description || '')}</p>
+          <a href="contact.html#join" class="btn btn-primary" style="margin-top:14px;">Enroll Program</a>
+        </div>`;
+      }).join('');
+    }
+
+    // Footer services list
+    document.getElementById('footer-services').innerHTML = services.slice(0, 4)
+      .map(sv => `<li><a href="services.html">${escapeHtml(sv.title)}</a></li>`).join('');
+  } catch (err) {
+    document.getElementById('services-grid').innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+  }
+}
+
+loadServices();
+</script>
+</body>
+</html>
